@@ -9,6 +9,9 @@ updates:
   - date: 2025-10-25
     count: 199
     diff: "+11"
+  - date: 2026-01-03
+    count: 207
+    diff: "+8"
 ---
 
 - “Kam aukoti?” – puslapis, kuriame pristatomos paramos ir kur galima kam skirti savo 1.2% + 0.6% + 0.6% GPM optimaliausiai (susiję: ROI vertinimai)
@@ -210,3 +213,11 @@ updates:
 - AI security infoprojektas: what can be the risks and minimizing risks (panašu į įprastą security, bet AI)
 - Krizės kaip galimybė pokyčiui: infoprojektas, padėsiantis prisitaikyti
 - Personal, local, analytics aggregator for websites – neatiduok duomenų gūglui
+- "Kiek kainuoja tavo laikas?" skaičiuoklė: Įrankis, vertinantis ne tik valandinį uždarbį, bet ir laiką, praleistą kelyje, pasiruošimą, stresą ir t.t.
+- "Reverse" darbo skelbimai: Ne įmonės kelia skelbimus, o specialistai aprašo, kokiomis sąlygomis jie sutiktų dirbti
+- Lietuviškų podkastų paieška pagal turinį (transcribed): Galimybė rasti konkrečią frazę ar temą visuose LT podkastuose
+- "Digital Will" (Skaitmeninis testamentas) įrankis: Paprastas būdas saugiai perduoti slaptažodžius ir paskyras artimiesiems po mirties
+- "Ne-influencerių" agentūra: Reklamos platforma, kuri jungia prekės ženklus su paprastais žmonėmis, turinčiais mažai, bet labai lojalių sekėjų (tikras micro-influencing)
+- Isochronic žemėlapis Vilniui, Lietuvai: mašina, viešasis, pėsčiomis, dviratis, paspirtukas
+- mažų 7 dienų iššūkių portalas: be interneto, minimalizmo, veganiškai, bėgiojant, rašant, tinklaraščio, planuojant, nuotykių, skaityumo, be kūprinimosi, dėkingumo/dovanų, tinginiaujant, pinigų, pasitikėjimo, laisvės/pilietiškumo, programuojant, valgant/ruošiant valgį, gamtoje, dviračiu, dizaino, tvarkantis, kavos, meditacijos, kelionių, be telefono, vaikštant, miego, pozitivyių žinučių, higienos, sekso, savęs pažinimo, pažinčių, filmų, kultūros, muziejų, vaikų, draugų, be facebook, be šiukšlių, be rūkymo, stovint, mokant kitus, atleidžiant/paleidžiant, muzikuojant, juokiantis, mokantis, šypsantis, informacijos dietos…
+- Lipdukai neįgaliųjų lazdelėmis (pvz liepsnos, drugeliai, gradientai) ir kitoks lazdelių tiuningas -- pritaikytas ilgis, rankena, koto forma, taip pat ir padas: pvz platesnis padas, kuris prisisuka, kai norisi išeiti po kopas, kalvas
