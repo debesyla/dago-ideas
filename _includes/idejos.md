@@ -12,10 +12,13 @@ updates:
   - date: 2026-01-03
     count: 207
     diff: "+8"
+  - date: 2026-01-03
+    count: 205
+    diff: "-2"
 ---
 
-- “Kam aukoti?” – puslapis, kuriame pristatomos paramos ir kur galima kam skirti savo 1.2% + 0.6% + 0.6% GPM optimaliausiai (susiję: ROI vertinimai)
-- Seimo procesų atvaizdavimas tvarkingiau, aiškiau 
+- “Kam aukoti?” – puslapis, kuriame pristatomos paramos ir kur galima kam skirti savo 1.2% + 0.6% + 0.6% GPM produktyviausiai (susiję: ROI vertinimai)
+- Seimo procesų atvaizdavimas tvarkingiau, aiškiau
 - vizualus prekės atpažinimas (maxima/lidl/rimi/iki automatinės kasos) – automatiškai pasiūlo ką čia per spurgą paėmei, ar bananą, nereikėtų ieškoti lentelėje
 - “Blet, neužsiveda mašina” – nufilmuoji ir AI atpažįsta iš garso kas galėtų būt sugedę, padeda troubleshootinti, kad žinotum kame bėda, kad garažuose neapgautų remončikai
 - klonatonas: kūrybinis žaidimas jaunimui – pamodifikuok, pridėk, nutrink kažką iš praeito piešinio, kad išmoktum, kad kūryba yra maišymas, nereik bijot kopijuot
@@ -72,7 +75,6 @@ updates:
 - Dronas - tikrintojas: paleidi, jis skrenda aplink namą ir fiksuoja statybos trūkumus, įtrūkimus. Vaizdu, sonaru, thermal, infrared, radiosignalai. Lengvas būdas patikrinti ar su namu (ypač stogu) nėra rimtų statybos bėdų
 - brainstorming / idea generation metodų apžvalgos
 - vertinu viską: reviews belekam, kam tik norisi
-- idejos.dago.lt public idėjos list, in case someone will find use of it
 - EU "ar alga lygi visoms lytims / žmonėms" direktyvos ataskaitų rengimas automatiškai (AI)
 - Lietuvos bibliotekų duomenų open decentralizacija, just in case something happens
 - produktyvumo sistemų apžvalgos
@@ -164,7 +166,6 @@ updates:
 - appsas kasdieniam rašymui, kaip https://writingstreak.io/ - "rašyk kasdien"
 - dėl palikimų žmonės susikolioja: kaip padėti atsidalinti? skaičuoklė / planeris? paeiliui "žaidimas" kaip go?
 - yra kapų QR memorial, tai galėtų būt webas / dump ir kitiems renginams - susikuri arba atsiųsim qr lipdukų, renginio dalyviai gali sumesti visi savo fotkes į vieną vietą / albumą, adminas gali išsivalyti. vestuvėms ir kitkam
-- kaina24, bet drabužiams (jei dar nėr)
 - dronai kaip narkotikų logistika: kodėl dar nenaudojama; ir kaip pagauti, kai bus naudojama? dronų radiolokatoriai?
 - AI iš nuolaidų dataseto (ir europinių/pasaulinių-eksporto kainų pokyčio) nuspėjimui kokios ir kam bus nuolaidos sekančią savaitę Lidl/Maximoj
 - lietuviškas kickstarter? ar jau yra? buvo? (jei buvo, kodėl dingo / nežinomas?)
@@ -192,8 +193,8 @@ updates:
 - Mini viena ranka laikomas trimeriukas, vejos kraštams
 - Popieriniai naujienlaiškiai – ale email marketing, bet popieriniu paštu
 - Solar powered distributed network servers (pvz ant stulpų, miške, avarinis tinklas)
-- localhosted domenų tikrintuvas: svajonių domenų duombazė → domreg ir kitų whois request checkeriai, notify if/when available 
-- retro terminalo tipo (amber, green) e-ink skaityklės, vietoj juoda-baltos ar pilnai spalvotos 
+- localhosted domenų tikrintuvas: svajonių domenų duombazė → domreg ir kitų whois request checkeriai, notify if/when available
+- retro terminalo tipo (amber, green) e-ink skaityklės, vietoj juoda-baltos ar pilnai spalvotos
 - web specialistų profsąjunga / dizainerių / marketingistų / sergančiųjų išsėtine sklerioze / neįgaliųjų (kokios dar potencialiai populiarios profsajungos, kurių dar nėra?)
 - VŠĮ “Išleisti knygą gali bet kas”: padedame rašytojams leisti / platinti jų kūrybą ne tik teorija ir patarimais
 - reklamos radijas: tik reklamos, visą parą
