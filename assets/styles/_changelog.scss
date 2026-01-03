@@ -1,0 +1,99 @@
+@use "variables" as *;
+
+.idea-count-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--xs);
+}
+
+.changelog-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25em;
+  line-height: 1;
+  padding: 0;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+  font-family: inherit;
+  anchor-name: --changelog-button;
+
+  &:hover,
+  &:focus {
+    opacity: 1;
+  }
+
+  &:focus {
+    outline: 1px dashed $theme;
+    outline-offset: 2px;
+  }
+}
+
+.changelog-dropdown {
+  background: $black;
+  border: 1px solid rgba($theme, 0.3);
+  font-size: 0.85em;
+  padding: var(--smmd);
+
+  @supports (position-area: bottom) {
+    position-anchor: --changelog-button;
+    position-area: bottom;
+    margin: 0!important; /* due to parent enabled margins */
+
+    @include desktop {
+      position-area: block-end span-inline-end;
+    }
+  }
+  @supports not (position-area: bottom) {
+    margin: auto!important; /* due to popover margins */
+  }
+
+  &::backdrop {
+    background: transparent;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--sm);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .changelog-date {
+    color: rgba($theme, 0.6);
+    flex-shrink: 0;
+
+    &::after {
+      content: ":";
+    }
+  }
+
+  .changelog-count {
+    flex-grow: 1;
+  }
+
+  .changelog-diff {
+    flex-shrink: 0;
+    font-weight: bold;
+
+    &:not(:empty) {
+      &::before {
+        content: "(";
+      }
+
+      &::after {
+        content: ")";
+      }
+    }
+  }
+}
