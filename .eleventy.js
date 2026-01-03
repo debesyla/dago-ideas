@@ -24,6 +24,11 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addWatchTarget("./bundle.scss");
   eleventyConfig.addWatchTarget("./assets/styles/");
 
+  // Clear CSS cache before each build to ensure fresh compilation
+  eleventyConfig.on("beforeBuild", () => {
+    cachedInlineCss = undefined;
+  });
+
   eleventyConfig.addExtension("scss", {
     outputFileExtension: "css",
 
@@ -50,9 +55,9 @@ module.exports = function (eleventyConfig) {
       };
     },
   });
-    
+
   eleventyConfig.addTemplateFormats("scss");
-  
+
   // Passthrough copy for assets folder to preserve folder structure
   eleventyConfig.addPassthroughCopy("assets/img");
 
