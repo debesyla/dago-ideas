@@ -1,5 +1,11 @@
 ---
 updates:
+  - date: 2025-09-24
+    count: 181
+    diff: ""
+  - date: 2025-09-25
+    count: 183
+    diff: "+2"
   - date: 2025-09-27
     count: 191
     diff: "+8"
@@ -9,7 +15,7 @@ updates:
   - date: 2025-10-25
     count: 199
     diff: "+11"
-  - date: 2026-01-03
+  - date: 2026-01-02
     count: 207
     diff: "+8"
   - date: 2026-01-03
