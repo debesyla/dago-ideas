@@ -21,26 +21,39 @@ updates:
   - date: 2026-01-03
     count: 205
     diff: "-2"
+  - date: 2026-04-27
+    count: 220
+    diff: "+15"
 ---
 
 - “Kam aukoti?” – puslapis, kuriame pristatomos paramos ir kur galima kam skirti savo 1.2% + 0.6% + 0.6% GPM produktyviausiai (susiję: ROI vertinimai)
+- Lietuvos tarpukario šriftų (fonts) skaitmenizavimas (nes mūsų tarpukario dizaineriai kūrė, bet jie dabar pamiršti)
 - Seimo procesų atvaizdavimas tvarkingiau, aiškiau
 - vizualus prekės atpažinimas (maxima/lidl/rimi/iki automatinės kasos) – automatiškai pasiūlo ką čia per spurgą paėmei, ar bananą, nereikėtų ieškoti lentelėje
-- “Blet, neužsiveda mašina” – nufilmuoji ir AI atpažįsta iš garso kas galėtų būt sugedę, padeda troubleshootinti, kad žinotum kame bėda, kad garažuose neapgautų remončikai
+- “Ble, neužsiveda mašina” – nufilmuoji ir AI atpažįsta iš garso kas galėtų būt sugedę, padeda troubleshootinti, kad žinotum kame bėda, kad garažuose neapgautų remončikai
+- support servisas, kai AI streikuoja/neveikia – fallback botams
 - klonatonas: kūrybinis žaidimas jaunimui – pamodifikuok, pridėk, nutrink kažką iš praeito piešinio, kad išmoktum, kad kūryba yra maišymas, nereik bijot kopijuot
 - nemokamos knygos / "knygnešiai" creative commons internetuos, public bibliotekų archyvas (be reikalavimo registruotis)
 - Prisiminimų albumas senukams: nuotraukos/slideshow, galimybė pridėti garso įrašą prie kiekvienos (be papildomo vargo, tiesiog default recordina, kol anie šneka), balsas → tekstas (metapaieškai vėliau) --- data gathering campaing prarandamiems prisiminimams, nes senukai nemėgsta rašyti knygų ir daug info išgaruoja
+- Lietuviškos MMA palyginimas tarp gyventojų, Prezidento, Premjero, avulių ir kitų milijonierių: koks mūsų nelygybės lygis? Pagal [moonbase.lgbt](https://moonbase.lgbt/blog/minimum-wage-clock/)
 - anti-nemokamas renginys: įeiti nemokamai, bet išeiti gali tik jei kažką renginyje nusiperki
-- support servisas, kai AI streikuoja/neveikia – fallback botams
+- Vieno Kauno švaros / VASA automobiliuko dienos istorija, pagal [propublica.org](https://projects.propublica.org/graphics/nyc-garbage)
 - lietuviškų web statistika: turim 150k domenų -> scan visus -> data kokius tvs naudoja, kiek dideli sitemap, kada naujinta, kokia įmonė, kam skirtas web
 - AI patyčios: duodi fb/linkedin postą ir jis iš tavęs išsityčioja, randa kalbos / logikos / skambesio bėdų, kad galėtum pasitaisyti prieš leidžiant --- arba iš vis sako "geriau neleisk šito, nes gaidys yr, sugalvok ką kito"
+- ux experiment: saugesnis internetas. vaikams, seniams, išsiblaškusiems ir nepatyrusiems. kaip apsaugoti juos nuo klaidų? klaidų ir grėsmių sąrašas bei sprendimai
 - saugumo kameros butams "babulė alert": notice, jei nepažįstamas veidas, jei nepažįstama mašina
+- gidas kaip sugalvoti pavadinimą, patikrinti jo tinkamumą
 - ramink bazarą – ai klauso diskusijos/pokalbio, ir kai kažkas įsijaučia, pradeda pypsėt, kad vsio, emocinis krūvis per didelis, raminamės
 - naminio alaus / vyno gaminimo appsas, step by step
+- vilniaus eismo stebėjimas: kada ateina ir baigias dviračių/paspirtukų sezonas?
+- vilniaus/naujanų naujienlaiškis: gyventojai rašo viešus laiškus vienas kitam, pagal [730dc.com](https://730dc.com)
+- random route Vilniaus bėgikams generavimas
 - AI eshop testeris (močiutės test) - suranda spragas, siūlo optimizacijų, A/B testų
 - LR rinkimų rezultatų atvaizdavimas aiškiau, live results (be reload), žemėlapis ir various dash iš karto ((moldovos geras pvz?))
 - kelių kokybės tikrinimo solar robotukas-dronas
 - “mačiau mešką!“ alert map meškoms, dronams, kontrobandos balionams
+- tyrimas, tool: ar per pilnatį tikrai padaugėja nusikaltimų bei skambučių policijai/112? (statistika iš 112, policijos, orų ir mėnulio fazių)
+- kiek šią akimirką 112 sulaukė skambučių? palyginimas laike
 - EU neįgalumo direktyvos atitikimo tikrintuvas web
 - rent-a-volodia: servisas, kuris suorganizuoja chaltūrčiką patvarkyt kažką namie, ūkyje, prisukt, pakabint - nereikia aiškintis su skirtingais
 - pagal numerius mašinos pranešti kitam vairuotojui, kad nedega jo lempos ar panašiai - ne bauda, ne policija, tiesiog asmeninis notice
@@ -62,6 +75,7 @@ updates:
 - gmail notification sound jei ateina laiškas iš X siuntėjo
 - #100naujųDalykųKasdien appsas
 - kapų priežiūros servisas
+- kebabų kainų palyginimas Lietuvoje (su regiono algom)
 - Važiuok dviračių žiemą kampanija – jei danai gali, gali ir lietuviai (ypač klimato kaitoj)
 - android apk decompiler -> compiler, editorius redaguoti appsus? išvis ar įmanoma?
 - sattelite nelegalaus NT detectorius / gamtos pažeidimų detektorius / per arti pakrantės detektorius
@@ -71,6 +85,9 @@ updates:
 - Interneto archyvas, lietuviško web
 - kursas, web programavimo pagrindai (kaip ieškoti informacijos ir kaip bandyti dalykus paprastai)
 - Lietuvos tarmių mokymosi appsas
+- Accessibility, pritaikymo neįgaliems dizaino patarimų enciklopedija
+- barcode, QR code ir kitų vizualiųjų kodų enciklopedija + kur kuris tinkamas
+- cypher, šifrų enciklopedija saugumo sistemų kūrimui
 - “Ką daryti senstant?” gidas/appsas/programa su planu ką daryti kiekvienais gyvenimo metais, kad pasenti oriai – sveikata, kūnas, draugai, hobiai
 - darkmode generator: padaryt darkmode nuotraukas (baltas fonas į juodą), video
 - verslo nuotaikų tyrimai: verslo savininkų apklausa apie jų lūkesčius (ar tikrai ši vasara palangos versininkams...)
@@ -227,4 +244,5 @@ updates:
 - "Ne-influencerių" agentūra: Reklamos platforma, kuri jungia prekės ženklus su paprastais žmonėmis, turinčiais mažai, bet labai lojalių sekėjų (tikras micro-influencing)
 - Isochronic žemėlapis Vilniui, Lietuvai: mašina, viešasis, pėsčiomis, dviratis, paspirtukas
 - mažų 7 dienų iššūkių portalas: be interneto, minimalizmo, veganiškai, bėgiojant, rašant, tinklaraščio, planuojant, nuotykių, skaityumo, be kūprinimosi, dėkingumo/dovanų, tinginiaujant, pinigų, pasitikėjimo, laisvės/pilietiškumo, programuojant, valgant/ruošiant valgį, gamtoje, dviračiu, dizaino, tvarkantis, kavos, meditacijos, kelionių, be telefono, vaikštant, miego, pozitivyių žinučių, higienos, sekso, savęs pažinimo, pažinčių, filmų, kultūros, muziejų, vaikų, draugų, be facebook, be šiukšlių, be rūkymo, stovint, mokant kitus, atleidžiant/paleidžiant, muzikuojant, juokiantis, mokantis, šypsantis, informacijos dietos…
+- būk pamirštas: gidas, servisas kad tave pamirštų feisbukas, google, kaip išeiti iš to, tapt laisvu, išsivalyti duomenis be problėmų
 - Lipdukai neįgaliųjų lazdelėmis (pvz liepsnos, drugeliai, gradientai) ir kitoks lazdelių tiuningas -- pritaikytas ilgis, rankena, koto forma, taip pat ir padas: pvz platesnis padas, kuris prisisuka, kai norisi išeiti po kopas, kalvas
