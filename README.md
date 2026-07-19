@@ -119,12 +119,30 @@ Edit `_includes/base.html` for structural HTML changes or `index.md` for homepag
 
 ## Deployment
 
-The site generates static files in `_site/` that can be deployed to any static hosting service:
+**Push to `main` → GitHub Actions builds the site and rsyncs `_site/` to the
+host over SSH.** See [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
 
-- **GitHub Pages**: Push to `gh-pages` branch or configure Pages to build from main
-- **Netlify**: Connect repository and set build command to `npx @11ty/eleventy`
-- **Vercel**: Import project with auto-detected Eleventy settings
-- **Traditional hosting**: Upload `_site/` contents to web server
+This replaced an earlier GitHub Pages → hosting pull, which left the live site
+trailing `main` by however long the pull took. `curl https://idejos.dago.lt/BUILD`
+now reports exactly which commit is serving.
+
+Every host, port and path detail lives in `production` environment secrets
+(`DEPLOY_SSH_KEY`, `SSH_HOST`, `SSH_USER`, `SSH_PORT`, `SSH_KNOWN_HOSTS`,
+`REMOTE_DIR`) rather than in this file or the workflow — **this repository is
+public**, so committing them would publish the server's address and host keys.
+
+Two things worth knowing before changing the workflow:
+
+- The deploy runs `rsync --delete`, so anything in the document root that isn't
+  in `_site/` is removed on every push. `.well-known/` is excluded so SSL
+  renewal isn't disturbed.
+- Host keys are pinned from a secret rather than fetched at deploy time. If the
+  host is ever migrated the deploy will start failing — that failure is
+  *correct*, and the fix is to re-verify the fingerprint and update the secret,
+  never to disable strict host key checking.
+
+The build itself is portable (`npx @11ty/eleventy` into `_site/`), so Netlify,
+Vercel or plain static hosting would all work if the host ever changes.
 
 ## Performance Optimizations
 

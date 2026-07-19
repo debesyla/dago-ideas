@@ -1,0 +1,222 @@
+name: Deploy idejos.dago.lt
+
+# Push to main → build the Eleventy site → rsync _site/ over SSH to Hostinger.
+# Replaces the gh-pages → Hostinger pull, which left the live site trailing
+# main by however long the pull took and gave no way to tell which commit was
+# actually serving.
+#
+# All host, port and path details come from `production` environment secrets,
+# so nothing about the server is recorded in this repo. That matters here in a
+# way it does not for the private sibling repos: this one is PUBLIC, and a
+# committed known_hosts would publish the server's IP and host keys.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-idejos
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    # cancel-in-progress is false, so a connection that stalls without tripping
+    # ConnectTimeout would otherwise hold the group for GitHub's 6-hour default
+    # and block every later deploy behind it.
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      MARKER: .deploy-marker-idejos
+      SITE: https://idejos.dago.lt
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          # @11ty/eleventy@3 declares engines.node >=18; the old workflow pinned
+          # no version at all and silently inherited the runner default.
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        # `ci` not `install`: fails loudly on a package-lock.json that has
+        # drifted from package.json instead of silently resolving something
+        # different from what was tested locally.
+        run: npm ci
+
+      - name: Build
+        run: |
+          set -euo pipefail
+          rm -rf _site
+          npx @11ty/eleventy
+
+      - name: Stage and verify artifact
+        run: |
+          set -euo pipefail
+
+          # Eleventy renders every markdown file it finds, including
+          # .github/copilot-instructions.md -> _site/.github/copilot-instructions/.
+          # gh-pages never published that (it 404s live today), so shipping it
+          # would newly expose internal docs as a side effect of changing
+          # deploy mechanism. Keep the public surface identical.
+          rm -rf _site/.github
+
+          printf '%s\n' "$GITHUB_SHA" > _site/BUILD
+
+          # The assets/img entries are the ones worth spelling out: they arrive
+          # via addPassthroughCopy, and Eleventy silently no-ops a passthrough
+          # whose source has moved — build stays green, images just vanish from
+          # the output, and rsync --delete then removes them from the live site.
+          # base.html references all four (favicon, og:image, footer srcset).
+          for f in index.html bundle.css README/index.html BUILD \
+                   assets/img/dago-icon.png assets/img/featured.png \
+                   assets/img/notbyai.png assets/img/notbyai@2x.png; do
+            test -f "_site/$f" || { echo "::error::missing _site/$f"; exit 1; }
+          done
+
+          # A build that "succeeds" into a near-empty index.html is the failure
+          # mode a plain `test -f` sails straight past. The real page is ~34kB.
+          size="$(wc -c < _site/index.html)"
+          test "$size" -gt 5000 \
+            || { echo "::error::_site/index.html is only ${size}B — build produced a stub"; exit 1; }
+
+          # bundle.css is compiled from bundle.scss by the addExtension hook in
+          # .eleventy.js. That hook catches its own errors and can emit an empty
+          # or truncated file while Eleventy still exits 0.
+          css="$(wc -c < _site/bundle.css)"
+          test "$css" -gt 500 \
+            || { echo "::error::_site/bundle.css is only ${css}B — Sass compile failed"; exit 1; }
+
+          # The inlineBundleCss shortcode returns an HTML comment instead of
+          # throwing when Sass fails, so the page renders unstyled and exits 0.
+          grep -q 'CSS failed to compile' _site/index.html \
+            && { echo "::error::inlineBundleCss fell back — Sass compile failed"; exit 1; }
+
+          echo "--- artifact ---"
+          find _site -type f | sort
+
+      - name: Configure SSH
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+
+          # Check the variables, not the files they land in. `printf '%s\n' ""`
+          # writes a one-byte newline, so `test -s` passes on an empty secret
+          # and the emptiness check it looks like never fires. An unset secret
+          # then surfaces two steps later as an opaque host-key rejection that
+          # the marker guard misreports as a missing marker file.
+          test -n "${DEPLOY_SSH_KEY:-}" \
+            || { echo "::error::DEPLOY_SSH_KEY secret is empty or unset"; exit 1; }
+          test -n "${SSH_KNOWN_HOSTS:-}" \
+            || { echo "::error::SSH_KNOWN_HOSTS secret is empty or unset"; exit 1; }
+          for v in SSH_HOST SSH_USER SSH_PORT; do
+            eval "val=\${$v:-}"
+            test -n "$val" || { echo "::error::$v secret is empty or unset"; exit 1; }
+          done
+
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+
+          # Host keys are pinned from a secret rather than ssh-keyscan'd at
+          # runtime: keyscanning would be trust-on-first-use on every run, i.e.
+          # no MITM protection at all. If the host is ever migrated this step
+          # starts failing — that failure is CORRECT. Re-verify the fingerprint
+          # and update the secret; never set StrictHostKeyChecking=no.
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+          cat > ~/.ssh/config <<EOF
+          Host deploy-target
+            HostName $SSH_HOST
+            User $SSH_USER
+            Port $SSH_PORT
+            IdentityFile ~/.ssh/deploy_key
+            IdentitiesOnly yes
+            StrictHostKeyChecking yes
+            UserKnownHostsFile ~/.ssh/known_hosts
+            BatchMode yes
+            ConnectTimeout 20
+          EOF
+          chmod 600 ~/.ssh/config
+
+      # Refuses to run --delete against anything but the directory that was
+      # marked by hand. public_html/ holds five other live projects (domenai,
+      # homepage, portfolio, weblog, ziniatinklis); a REMOTE_DIR typo plus
+      # --delete would destroy one of them.
+      - name: Guard — target marker must exist
+        env:
+          REMOTE_DIR: ${{ secrets.REMOTE_DIR }}
+        run: |
+          ssh deploy-target "test -f '$REMOTE_DIR/$MARKER'" \
+            || { echo "::error::$MARKER not found in target — refusing to deploy"; exit 1; }
+
+      - name: Dry run
+        env:
+          REMOTE_DIR: ${{ secrets.REMOTE_DIR }}
+        run: |
+          rsync -a --checksum --delete --itemize-changes --dry-run \
+            --exclude "$MARKER" \
+            --exclude '.well-known/' \
+            -e "ssh -F $HOME/.ssh/config" \
+            _site/ "deploy-target:$REMOTE_DIR/"
+
+      - name: Deploy
+        env:
+          REMOTE_DIR: ${{ secrets.REMOTE_DIR }}
+        run: |
+          # --checksum is required, not cosmetic: every build regenerates the
+          # output with fresh mtimes, so without it rsync re-transfers the whole
+          # tree on every run. With it, only genuinely changed bytes move.
+          rsync -a --checksum --delete --itemize-changes \
+            --exclude "$MARKER" \
+            --exclude '.well-known/' \
+            -e "ssh -F $HOME/.ssh/config" \
+            _site/ "deploy-target:$REMOTE_DIR/"
+
+      - name: Smoke test
+        run: |
+          set -euo pipefail
+          sleep 2
+
+          # 1. Proves the bytes reached the LIVE docroot. rsync CREATES a
+          #    missing destination rather than failing, so a mistyped REMOTE_DIR
+          #    gives a green rsync AND a green homepage check (the old files are
+          #    untouched and still serving) with the site frozen forever.
+          #    This is the only assertion that catches that.
+          got="$(curl -fsS --max-time 20 "$SITE/BUILD")"
+          test "$got" = "$GITHUB_SHA" \
+            || { echo "::error::live BUILD=$got, expected $GITHUB_SHA"; exit 1; }
+
+          # 2. The homepage renders.
+          #    Write to a file first: `curl | grep -q` SIGPIPEs curl under
+          #    pipefail and reddens good deploys.
+          curl -fsS --max-time 20 "$SITE/" -o /tmp/home.html
+          grep -q '<title>' /tmp/home.html \
+            || { echo "::error::homepage has no <title>"; exit 1; }
+
+          # 3. Styles are live. The page inlines its CSS, so an unstyled site
+          #    still returns 200 with a plausible <title> — checking for the
+          #    fallback comment is what actually catches a Sass failure that
+          #    survived to production.
+          grep -q 'CSS failed to compile' /tmp/home.html \
+            && { echo "::error::live page shipped without styles"; exit 1; }
+
+          # 4. The standalone stylesheet landed too. index.html reaching the
+          #    docroot while sibling files did not is exactly what a partial or
+          #    interrupted rsync leaves behind, and a 200 on / cannot see it.
+          code="$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "$SITE/bundle.css" || true)"
+          test "$code" = "200" \
+            || { echo "::error::bundle.css returned $code — partial sync?"; exit 1; }
+
+          echo "Deployed $GITHUB_SHA to $SITE"
