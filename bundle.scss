@@ -1,3 +1,4 @@
-@use "assets/styles/reset";
+// Shared base (reset.css + dago.css) is loaded from https://dago.lt in base.html.
+// Only site-specific styles live here.
 @use "assets/styles/theme";
 @use "assets/styles/changelog";
