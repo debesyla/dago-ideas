@@ -4,7 +4,7 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: var(--xs);
+  gap: 0.25em;
 }
 
 .changelog-toggle {
@@ -34,7 +34,7 @@
   background: $black;
   border: 1px solid rgba($theme, 0.3);
   font-size: 0.85em;
-  padding: var(--smmd);
+  padding: 0.75em;
 
   @supports (position-area: bottom) {
     position-anchor: --changelog-button;
@@ -62,7 +62,7 @@
   li {
     display: flex;
     justify-content: space-between;
-    gap: var(--sm);
+    gap: 0.5em;
 
     &:last-child {
       border-bottom: none;

@@ -3,7 +3,7 @@
 /* Site-specific styles on top of the shared dago.lt base
    (body colors, typography, links, lists, ::selection come from dago.css). */
 body {
-  padding: var(--2xl) var(--lg) var(--3xl);
+  padding: 3em 1.5em 4em;
   max-width: 75ch;
 }
 
@@ -30,24 +30,15 @@ body {
 /* content */
 #content {
   & > * + * {
-    margin-top: var(--md);
+    margin-top: 1em;
   }
 
   // .md viduje lengviau editinti kaip ul, outputas tegul atrodo kaip ol
   > ul {
-    padding-top: var(--md);
     list-style-type: decimal;
-
-    li + li {
-      margin-top: var(--md);
-    }
-
-    li::marker {
-      font-size: 0.75em;
-    }
   }
 }
 
 #colophon {
-  margin-top: var(--2xl);
+  margin-top: 3em;
 }
