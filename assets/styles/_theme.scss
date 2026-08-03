@@ -36,6 +36,10 @@ body {
   // .md viduje lengviau editinti kaip ul, outputas tegul atrodo kaip ol
   > ul {
     list-style-type: decimal;
+
+    li::marker {
+      font-size: 0.75em;
+    }
   }
 }
 
