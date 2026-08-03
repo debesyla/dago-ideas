@@ -4,12 +4,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ page.title | default: site.title | default: "dago / idejos" }}</title>
-        <link rel="icon" href="/assets/img/dago-icon.png" type="image/png" />
+        <title>{{ page.title | default: site.title | default: "idėjos // dago" }}</title>
+        <!-- Cross-origin favicon is fine (async, non-blocking). -->
+        <link rel="icon" type="image/png" href="https://dago.lt/assets/img/dago-icon.png">
 
         <!-- Social sharing metadata -->
         {% assign baseurl = site.url | default: '' %}
-        {% assign og_title = page.title | default: site.title | default: 'dago / idejos' %}
+        {% assign og_title = page.title | default: site.title | default: 'idėjos // dago' %}
         {% assign og_desc = page.description | default: site.description | default: 'idejos by Dago' %}
         {% assign og_image = baseurl | append: '/assets/img/featured.png' %}
         <meta property="og:type" content="website">
@@ -24,6 +25,12 @@
         <meta name="twitter:image" content="{{ og_image }}">
         <meta name="fediverse:creator" content="@dago@river.group.lt">
 
+        <!-- Shared dago.lt base (variables, typography, links) — one file for
+             every dago.lt-network page, so it's usually cached. Bump ?v= when the
+             base changes. A cold load may briefly flash unstyled; accepted. -->
+        <link rel="stylesheet" href="https://dago.lt/assets/styles/reset.css?v=20260804">
+        <link rel="stylesheet" href="https://dago.lt/assets/styles/dago.css?v=20260804">
+        <!-- Site-specific styles on top of the shared base. -->
         {% inlineBundleCss %}
     </head>
 

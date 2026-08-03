@@ -2,7 +2,7 @@
 layout: base.html
 ---
 
-# /ideas
+<h1>idėjos <a href="https://dago.lt" target="_blank" rel="noopener" class="opacity-20 text-nowrap hover:opacity-100 no-underline">// dago</a></h1>
 
 > **Įkvėpta:** [aboutideasnow.com](https://aboutideasnow.com)
 

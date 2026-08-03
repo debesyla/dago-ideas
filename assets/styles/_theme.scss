@@ -1,47 +1,30 @@
 @use "variables" as *;
 
-/* dago.lt */
+/* Site-specific styles on top of the shared dago.lt base
+   (body colors, typography, links, lists, ::selection come from dago.css). */
 body {
-  background: $black;
-  color: $theme;
-  margin: 0 auto 0 0;
   padding: var(--2xl) var(--lg) var(--3xl);
-  font-family: monospace, 'Courier New', Courier, sans-serif;
   max-width: 75ch;
 }
 
-a {
-  text-underline-offset: var(--xs);
+/* utilities used in markup that the shared base doesn't ship */
+.opacity-20 {
+  opacity: 0.2;
+}
 
+.text-nowrap {
+  text-wrap: nowrap;
+}
+
+.no-underline {
+  text-decoration: none;
+}
+
+.hover\:opacity-100 {
   &:hover,
   &:focus {
-    text-decoration-style: dashed;
+    opacity: 1;
   }
-}
-
-ul, ol {
-  padding-left: var(--lg);
-
-  li {
-    & + li {
-      margin-top: var(--md);
-    }
-
-    &::marker {
-      color: rgba($theme, 0.325);
-    }
-  }
-}
-
-ol {
-  li::marker {
-    font-size: 0.75em;
-  }
-}
-
-::selection {
-  background: $theme;
-  color: $black;
 }
 
 /* content */
@@ -54,6 +37,10 @@ ol {
   > ul {
     padding-top: var(--md);
     list-style-type: decimal;
+
+    li + li {
+      margin-top: var(--md);
+    }
 
     li::marker {
       font-size: 0.75em;
