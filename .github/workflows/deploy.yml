@@ -158,8 +158,41 @@ jobs:
         env:
           REMOTE_DIR: ${{ secrets.REMOTE_DIR }}
         run: |
-          ssh deploy-target "test -f '$REMOTE_DIR/$MARKER'" \
-            || { echo "::error::$MARKER not found in target — refusing to deploy"; exit 1; }
+          set -uo pipefail
+
+          # `test -f` can only ever exit 0 or 1, so a 255 here is ssh itself
+          # failing to get a session at all — connect timeout, refused auth,
+          # host-key mismatch. Collapsing that into "marker not found" sends
+          # you hunting for a missing file on a server the runner never
+          # reached. That misreport has already burned debugging sessions in
+          # sibling repos, so the exit codes are separated and ssh's stderr is
+          # surfaced. 2>&1 >/dev/null captures stderr only: the order matters,
+          # stderr goes to the capture first, then stdout is discarded.
+          if err="$(ssh deploy-target "test -f '$REMOTE_DIR/$MARKER'" 2>&1 >/dev/null)"; then
+            rc=0
+          else
+            rc=$?
+          fi
+
+          case "$rc" in
+            0)
+              echo "marker present — target confirmed"
+              ;;
+            1)
+              echo "::error::$MARKER not found in target — refusing to deploy"
+              echo "::error::the host answered, so this really is a missing file: create the marker by hand in the deploy directory."
+              exit 1
+              ;;
+            255)
+              echo "::error::ssh could not reach the deploy host: ${err:-no stderr output}"
+              echo "::error::NOT a missing marker — nothing was checked. Verify sshd is up, that SSH_HOST/SSH_PORT are current, and that the runner's IP is not firewalled or fail2banned."
+              exit 1
+              ;;
+            *)
+              echo "::error::marker check exited $rc: ${err:-no stderr output}"
+              exit 1
+              ;;
+          esac
 
       - name: Dry run
         env:
