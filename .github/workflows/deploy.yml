@@ -74,7 +74,7 @@ jobs:
           # the output, and rsync --delete then removes them from the live site.
           # base.html references all four (favicon, og:image, footer srcset).
           for f in index.html bundle.css README/index.html BUILD \
-                   assets/img/dago-icon.png assets/img/featured.png \
+                   assets/img/dago-icon.png assets/img/og-image.png \
                    assets/img/notbyai.png assets/img/notbyai@2x.png; do
             test -f "_site/$f" || { echo "::error::missing _site/$f"; exit 1; }
           done
