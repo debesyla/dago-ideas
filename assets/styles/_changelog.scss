@@ -31,8 +31,9 @@
 }
 
 .changelog-dropdown {
-  background: $black;
-  border: 1px solid rgba($theme, 0.3);
+  background: hsl(var(--black));
+  border: 1px solid hsl(var(--theme) / 0.35);
+  max-width: calc(100vw - 2rem);
   font-size: 0.85em;
   padding: 0.75em;
 

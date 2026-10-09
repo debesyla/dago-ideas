@@ -3,8 +3,7 @@
 /* Site-specific styles on top of the shared dago.lt base
    (body colors, typography, links, lists, ::selection come from dago.css). */
 body {
-  padding: 3em 1.5em 4em;
-  max-width: 75ch;
+  padding: 2em 1em 4em;
 }
 
 /* utilities used in markup that the shared base doesn't ship */
@@ -30,11 +29,12 @@ body {
 /* content */
 #content {
   & > * + * {
-    margin-top: 1em;
+    margin-top: 0;
   }
 
   // .md viduje lengviau editinti kaip ul, outputas tegul atrodo kaip ol
-  > ul {
+  .ideas-section > ul {
+    margin: 0;
     list-style-type: decimal;
 
     li::marker {
@@ -45,4 +45,30 @@ body {
 
 #colophon {
   margin-top: 3em;
+}
+
+.site-header {
+  margin-bottom: 1em;
+}
+
+.inspiration {
+  margin-top: 1rem;
+}
+
+.metadata {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: hsl(var(--theme) / 0.72);
+}
+
+.ideas-section {
+  display: grid;
+  grid-template-columns: minmax(0, 75ch);
+}
+
+@media (pointer: coarse) {
+  .metadata .changelog-toggle {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }
